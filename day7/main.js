@@ -1,28 +1,26 @@
 const { readFileSync } = require('fs');
+const { sum } = require('../lib/list');
 
 const input = readFileSync('./input.txt', 'ascii').split(',').map(e => parseInt(e)).sort((a, b) => a - b);
 
-function requiredFuel(crabs, toPosition) {
-  return crabs.reduce((fuel, c) => fuel + Math.abs(c - toPosition), 0);
+function requiredFuel(crabs, toPosition, costFn = n => n) {
+  return crabs.reduce((fuel, c) => fuel + costFn(Math.abs(c - toPosition)), 0);
 }
 
-const min = Math.min(...input);
-const max = Math.max(...input);
+function median(list) {
+  return list.sort((a, b) => a - b)[Math.floor(list.length / 2)];
+}
 
-console.log(
-  new Array(max - min)
-    .fill(0)
-    .map((_, i) => i + min)
-    .map(e => ([e, requiredFuel(input, e)]))
-    .join('\n')
-  // .reduce((best, curr) => curr[1] < best[1] ? curr : best, [-1, Infinity])
-);
+console.log(requiredFuel(input, median(input)));
 
-// function median(list) {
-//   return input.sort((a, b) => a - b)[Math.ceil(input.length / 2)];
-// }
+function triangular(n) {
+  return n * (n + 1) / 2;
+}
 
-// console.log(input.map((_, i) => requiredFuel(input, i)).join('\n'));
-// console.log(requiredFuel(input, 10));
-// console.log(requiredFuel(input, median(input)));
-// console.log(median(input));
+function mean(list) {
+  return sum(list) / list.length;
+}
+
+// check both and take the smaller of the two
+console.log(requiredFuel(input, Math.floor(mean(input)), triangular));
+console.log(requiredFuel(input, Math.ceil(mean(input)), triangular));
