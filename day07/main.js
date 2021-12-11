@@ -1,14 +1,10 @@
 const { readFileSync } = require('fs');
-const { sum } = require('../lib/list');
+const { sum, median } = require('../lib/list');
 
 const input = readFileSync('./input.txt', 'ascii').split(',').map(e => parseInt(e)).sort((a, b) => a - b);
 
 function requiredFuel(crabs, toPosition, costFn = n => n) {
   return crabs.reduce((fuel, c) => fuel + costFn(Math.abs(c - toPosition)), 0);
-}
-
-function median(list) {
-  return list.sort((a, b) => a - b)[Math.floor(list.length / 2)];
 }
 
 console.log(requiredFuel(input, median(input)));

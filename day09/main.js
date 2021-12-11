@@ -17,8 +17,8 @@ const minimums = map.flatMap((r, y) => r.filter((_, x) => isLocalMinimum(map, x,
 console.log(sum(minimums.map(m => m + 1)));
 
 const Map = {
-  RIDGE: 1,
   BASIN: 0,
+  RIDGE: 1,
   MARKED: 2,
 }
 
