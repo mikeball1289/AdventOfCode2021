@@ -61,5 +61,4 @@ while (containsNonZero(map)) {
   step(map);
   i++;
 }
-
 console.log(i);
